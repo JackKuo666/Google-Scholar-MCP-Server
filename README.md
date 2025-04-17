@@ -13,7 +13,6 @@ The Google Scholar MCP Server provides a bridge between AI assistants and Google
 
 ## 🚀 Quick Start
 
-### Installing Manually
 ### Installing via Smithery
 
 To install google-scholar Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@JackKuo666/google-scholar-mcp-server):
@@ -40,23 +39,27 @@ npx -y @smithery/cli@latest install @JackKuo666/google-scholar-mcp-server --clie
 npx -y @smithery/cli@latest install @JackKuo666/google-scholar-mcp-server --client cline --config "{}"
 ```
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/JackKuo666/google-scholar-MCP-Server.git
-   cd google-scholar-MCP-Server
-   ```
+### Installing Manually
 
-2. Install the required dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
+#### Using UV (Recommended)
 
-
-For development:
+[UV](https://github.com/astral-sh/uv) is a modern Python package manager and environment manager. Here's how to use it with this project:
 
 ```bash
+uv tool install git+https://github.com/JackKuo666/Google-Scholar-MCP-Server.git
+```
+Test:
+```bash
+google-scholar-mcp serve
+# output:
+# Starting Google Scholar MCP server
+```
+ctrl + c to stop the server
+
+#### Using pip
+```bash
 # Clone and set up development environment
-git clone https://github.com/JackKuo666/Google-Scholar-MCP-Server.git
+git clone https://github.com/JackKuo666/google-scholar-MCP-Server.git
 cd Google-Scholar-MCP-Server
 
 # Create and activate virtual environment
@@ -69,53 +72,24 @@ pip install -r requirements.txt
 
 ## 📊 Usage
 
-Start the MCP server:
-
-```bash
-python google_scholar_server.py
-```
-
-Once the server is running, you can use the provided MCP tools in your AI assistant or application. Here are some examples of how to use the tools:
-
-### Example 1: Search for papers using keywords
-
-```python
-result = await mcp.use_tool("search_google_scholar_key_words", {
-    "query": "artificial intelligence ethics",
-    "num_results": 5
-})
-print(result)
-```
-
-### Example 2: Perform an advanced search
-
-```python
-result = await mcp.use_tool("search_google_scholar_advanced", {
-    "query": "machine learning",
-    "author": "Hinton",
-    "year_range": [2020, 2023],
-    "num_results": 3
-})
-print(result)
-```
-
-### Example 3: Get author information
-
-```python
-result = await mcp.use_tool("get_author_info", {
-    "author_name": "Geoffrey Hinton"
-})
-print(result)
-```
-
-These examples demonstrate how to use the three main tools provided by the Google Scholar MCP Server. Adjust the parameters as needed for your specific use case.
-
-## Usage with Claude Desktop
+### Claude Desktop
 
 Add this configuration to your `claude_desktop_config.json`:
 
-(Mac OS)
+#### Mac OS
+uv:
+```json
+{
+  "mcpServers": {
+    "google-scholar": {
+      "command": "google-scholar-mcp",
+      "args": ["serve"]
+    }
+  }
+}
+```
 
+pip:
 ```json
 {
   "mcpServers": {
@@ -127,8 +101,19 @@ Add this configuration to your `claude_desktop_config.json`:
 }
 ```
 
-(Windows version):
-
+#### Windows
+uv:
+```json
+{
+  "mcpServers": {
+    "google-scholar": {
+      "command": "google-scholar-mcp",
+      "args": ["serve"]
+    }
+  }
+}
+```
+pip:
 ```json
 {
   "mcpServers": {
@@ -144,7 +129,36 @@ Add this configuration to your `claude_desktop_config.json`:
   }
 }
 ```
-Using with Cline
+
+### Cursor
+uv:
+```json
+{
+  "mcpServers": {
+    "google-scholar": {
+      "command": "google-scholar-mcp",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+### Cline
+uv:
+```json
+{
+  "mcpServers": {
+    "google-scholar": {
+      "command": "google-scholar-mcp",
+      "args": ["serve"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
+pip:
 ```json
 {
   "mcpServers": {
@@ -162,6 +176,67 @@ Using with Cline
 }
 ```
 
+### Cherry Studio
+uv:
+```json
+{
+  "mcpServers": {
+    "6dcsudHQtSfnWfXRHWHa8": {
+      "name": "google-scholar-mcp",
+      "type": "stdio",
+      "description": "",
+      "isActive": true,
+      "command": "google-scholar-mcp",
+      "args": [
+        "serve"
+      ]
+    }
+  }
+}
+```
+
+### Manually Start for Development
+```bash
+# uv
+google-scholar-mcp serve
+# pip
+python google_scholar_server.py
+```
+
+Once the server is running, you can use the provided MCP tools in your AI assistant or application. Here are some examples of how to use the tools:
+
+#### Example 1: Search for papers using keywords
+
+```python
+result = await mcp.use_tool("search_google_scholar_key_words", {
+    "query": "artificial intelligence ethics",
+    "num_results": 5
+})
+print(result)
+```
+
+#### Example 2: Perform an advanced search
+
+```python
+result = await mcp.use_tool("search_google_scholar_advanced", {
+    "query": "machine learning",
+    "author": "Hinton",
+    "year_range": [2020, 2023],
+    "num_results": 3
+})
+print(result)
+```
+
+#### Example 3: Get author information
+
+```python
+result = await mcp.use_tool("get_author_info", {
+    "author_name": "Geoffrey Hinton"
+})
+print(result)
+```
+
+These examples demonstrate how to use the three main tools provided by the Google Scholar MCP Server. Adjust the parameters as needed for your specific use case.
 
 ## 🛠 MCP Tools
 
@@ -202,6 +277,7 @@ Get detailed information about an author from Google Scholar.
 
 - `google_scholar_server.py`: The main MCP server implementation using FastMCP
 - `google_scholar_web_search.py`: Contains the web scraping logic for searching Google Scholar
+- `google_scholar_cli.py`: Contains the CLI for the Google Scholar MCP server
 
 ## 🔧 Dependencies
 
@@ -212,6 +288,12 @@ Get detailed information about an author from Google Scholar.
 
 You can install the required dependencies using:
 
+uv:
+```bash
+uv sync
+```
+
+pip:
 ```bash
 pip install -r requirements.txt
 ```
@@ -227,3 +309,4 @@ This project is licensed under the MIT License.
 ## ⚠️ Disclaimer
 
 This tool is for research purposes only. Please respect Google Scholar's terms of service and use this tool responsibly.
+

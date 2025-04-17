@@ -1,4 +1,6 @@
-requests
-bs4 
-mcp 
-scholarly
+mcp>=1.6.0
+scholarly>=1.7.0
+asyncio>=3.4.3
+requests>=2.25.0
+beautifulsoup4>=4.9.3
+click>=8.1.8

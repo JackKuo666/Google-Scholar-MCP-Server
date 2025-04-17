@@ -8,4 +8,17 @@ dependencies = [
     "mcp[cli]>=1.4.1",
     "scholarly>=1.7.0",
     "asyncio>=3.4.3",
+    "requests>=2.25.0",
+    "beautifulsoup4>=4.9.3",
+    "click>=8.1.8"
 ]
+
+[project.scripts]
+google-scholar-mcp = "google_scholar_cli:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["google_scholar_server", "google_scholar_web_search", "google_scholar_cli"]
