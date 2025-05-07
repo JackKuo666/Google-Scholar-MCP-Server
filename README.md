@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/jackkuo666-google-scholar-mcp-server-badge.png)](https://mseep.ai/app/jackkuo666-google-scholar-mcp-server)
+
 # Google Scholar MCP Server
 [![smithery badge](https://smithery.ai/badge/@JackKuo666/google-scholar-mcp-server)](https://smithery.ai/server/@JackKuo666/google-scholar-mcp-server)
 
