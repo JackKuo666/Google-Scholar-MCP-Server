@@ -13,7 +13,6 @@ mcp = FastMCP("scholar_pubmed")
 
 @mcp.tool()
 async def search_google_scholar_key_words(query: str, num_results: int = 5) -> List[Dict[str, Any]]:
-    logging.info(f"Searching Google Scholar for articles with query: {query}, num_results: {num_results}")
     """
     Search for articles on Google Scholar using key words.
 
@@ -24,6 +23,7 @@ async def search_google_scholar_key_words(query: str, num_results: int = 5) -> L
     Returns:
         List of dictionaries containing article information
     """
+    logging.info(f"Searching Google Scholar for articles with query: {query}, num_results: {num_results}")
     try:
         results = await asyncio.to_thread(google_scholar_search, query, num_results)
         return results
@@ -32,7 +32,6 @@ async def search_google_scholar_key_words(query: str, num_results: int = 5) -> L
 
 @mcp.tool()
 async def search_google_scholar_advanced(query: str, author: Optional[str] = None, year_range: Optional[tuple] = None, num_results: int = 5) -> List[Dict[str, Any]]:
-    logging.info(f"Performing advanced search with parameters: {locals()}")
     """
     Search for articles on Google Scholar using advanced filters.
 
@@ -45,6 +44,7 @@ async def search_google_scholar_advanced(query: str, author: Optional[str] = Non
     Returns:
         List of dictionaries containing article information
     """
+    logging.info(f"Performing advanced search with parameters: {locals()}")
     try:
         results = await asyncio.to_thread(
             advanced_google_scholar_search,
@@ -56,7 +56,6 @@ async def search_google_scholar_advanced(query: str, author: Optional[str] = Non
 
 @mcp.tool()
 async def get_author_info(author_name: str) -> Dict[str, Any]:
-    logging.info(f"Retrieving author information for: {author_name}")
     """
     Get detailed information about an author from Google Scholar.
 
@@ -66,6 +65,7 @@ async def get_author_info(author_name: str) -> Dict[str, Any]:
     Returns:
         Dictionary containing author information
     """
+    logging.info(f"Retrieving author information for: {author_name}")
     try:
         search_query = scholarly.search_author(author_name)
         author = await asyncio.to_thread(next, search_query)
