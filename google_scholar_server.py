@@ -68,7 +68,18 @@ async def get_author_info(author_name: str) -> Dict[str, Any]:
     """
     try:
         search_query = scholarly.search_author(author_name)
-        author = await asyncio.to_thread(next, search_query)
+        # StopIteration cannot propagate through an asyncio Future.
+        # A login page can also appear as an empty iterator in scholarly.
+        author = await asyncio.to_thread(next, search_query, None)
+        if author is None:
+            return {
+                "error_code": "AUTHOR_RESULTS_UNAVAILABLE",
+                "error": (
+                    "Google Scholar returned no usable author results. "
+                    "The author may not be found, or Google may require sign-in "
+                    "or verification. Browser sign-in is not shared with this MCP."
+                ),
+            }
         filled_author = await asyncio.to_thread(scholarly.fill, author)
         
         # Extract relevant information
